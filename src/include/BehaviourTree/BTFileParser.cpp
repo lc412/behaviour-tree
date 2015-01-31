@@ -141,7 +141,23 @@ INode* ConstructBTNodeFromXMLNode(xml_node<>* node, std::map<char*,void*>* share
 			node->first_attribute("repeatUntilFailure");
 		if (repeaterEndAttribute != nullptr)
 		{
-			btNode = new Repeater(sharedData, repeaterEndAttribute->value());
+			bool untilFailure;
+			std::string repeatFlag = repeaterEndAttribute->value();
+			if (!repeatFlag.compare("true"))
+			{
+				untilFailure = true;
+			}
+			else if (!repeatFlag.compare("false"))
+			{
+				untilFailure = false;
+			}
+			else
+			{
+				// TODO: throw error.
+				std::cout << "Error: invalid repeater attribute." << std::endl;
+			}
+
+			btNode = new Repeater(sharedData, untilFailure);
 		}
 		else
 		{
@@ -196,7 +212,7 @@ void ParseXMLSubTree(xml_node<>* subTreeRoot, INode* parent,
 		// construct node given xml node
 		INode* treeNode = 
 			ConstructBTNodeFromXMLNode(currentNode, sharedData);
-
+			
 		// Add constructed node as children to parent
 		switch (parentType)
 		{

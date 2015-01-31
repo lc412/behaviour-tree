@@ -8,4 +8,13 @@
 		<leaf fn="foo" />
 		<leaf fn="foo" />
 	</selector>
+	<inverter>
+		<leaf fn="bar" />
+	</inverter>
+	<succeeder>
+		<leaf fn="bar" />
+	</succeeder>
+	<repeater repeatUntilFailure="true">
+		<leaf fn="foobar" />
+	</repeater>
 </sequence>

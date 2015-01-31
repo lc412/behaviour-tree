@@ -12,3 +12,8 @@ function bar()
 	print "Foo"
 	return "failure"
 end
+
+function foobar()
+	print "foobar"
+	return "running"
+end
