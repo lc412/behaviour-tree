@@ -5,9 +5,11 @@
 #include <fstream>
 #include <sstream>
 
+using namespace rapidxml;
+
 BTFileParser* BTFileParser::instance = nullptr;
 
-BTFileParser BTFileParser::GetInstance()
+BTFileParser* BTFileParser::GetInstance()
 {
 	if (instance == nullptr)
 	{
@@ -44,4 +46,6 @@ INode* ParseXMLFile(const char* filePath)
 	xml_node<>* rootNode = doc.first_node();
 
 	// TODO: parse all text
+
+	return nullptr;
 }
