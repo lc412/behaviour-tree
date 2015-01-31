@@ -14,6 +14,8 @@ public:
 
 	virtual ProcessStatus::Enum Process()=0;
 
+	INode* GetChild();
+
 	void SetChild(INode* child);
 
 protected:
