@@ -3,6 +3,8 @@
 
 #include "INode.h"
 
+#include <map>
+
 class BTFileParser
 {
 public:
@@ -11,13 +13,19 @@ public:
 
 	~BTFileParser();
 
-	INode* ParseXMLFile(const char* filePath) const;
+	INode* ParseXMLFile(const char* filePath);
+
+	std::map<char*,void*>* GetSharedData();
+
+	void SetSharedData(std::map<char*,void*>* sharedData);
 
 private:
 
 	BTFileParser();
 
 	static BTFileParser* instance;
+
+	std::map<char*,void*>* sharedData;
 };
 
 #endif

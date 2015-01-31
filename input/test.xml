@@ -1,5 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<root>
-	<leaf fn="display" />
+<sequence>
 	<leaf fn="foo" />
-</root>
+	<leaf fn="foo" />
+	<selector>
+		<leaf fn="bar" />
+		<leaf fn="bar" />
+		<leaf fn="bar" />
+	</selector>
+</sequence>

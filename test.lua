@@ -5,3 +5,7 @@ end
 function foo()
 	print "Bar"
 end
+
+function bar()
+	print "Foo"
+end

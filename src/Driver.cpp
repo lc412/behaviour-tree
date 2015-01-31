@@ -13,10 +13,7 @@
 
 #include "include/Lua/LuaManager.h"
 
-#include "include/RapidXML/rapidxml.hpp"
-#include "include/RapidXML/rapidxml.hpp"
-#include "include/RapidXML/rapidxml.hpp"
-#include "include/RapidXML/rapidxml.hpp"
+#include "include/BehaviourTree/BTFileParser.h"
 
 #include <iostream>
 #include <map>
@@ -25,45 +22,65 @@
 #include <fstream>
 #include <sstream>
 
-using namespace rapidxml;
-
 int main(int argc, char* argv[])
 {
-	// Retrieve XML text
-	std::ifstream t("./input/test.xml");
-	std::stringstream buffer;
-	buffer << t.rdbuf();
-	std::string text = buffer.str();
-
-	// parse XML document
-	const int PARSE_FLAGS = 0; // 0 signals default parse settings
-	xml_document<> doc;
-	doc.parse<0>(&text[0]);
-
-	xml_node<>* currentNode = doc.first_node();
-
-
 	std::map<char*,void*>* sharedData = new std::map<char*,void*>();
+
+	BTFileParser* fileParser = BTFileParser::GetInstance();
+
+	fileParser->SetSharedData(sharedData);
 
 	int processedCount = 0;
 	(*sharedData)["processedCount"] = &processedCount;
 
-	Composite* root = new Sequence(sharedData); // memory leak
-
-	// manually retrieve leaf nodes (test code)
-	xml_node<>* leafNode = currentNode->first_node();
-	while (leafNode != nullptr)
-	{
-		xml_attribute<>* leafNodeAttr = leafNode->first_attribute();
-		char* leafNodeFn = leafNodeAttr->value();
-		root->AddChild(new Leaf(sharedData, leafNodeFn));
-
-		leafNode = leafNode->next_sibling();
-	}
-
-	// root->AddChild(new Leaf(sharedData, leafNodeFn)); // memory leak
+	INode* root = fileParser->ParseXMLFile("./input/test.xml");
 
 	ProcessStatus::Enum result = root->Process();
+
+	delete static_cast<Sequence*>(root);
+	delete sharedData;
+
+	//ProcessStatus::Enum result = ProcessStatus::Failure;
+
+////////////////////////////////////////////////////////////
+
+	// Retrieve XML text
+	// std::ifstream t("./input/test.xml");
+	// std::stringstream buffer;
+	// buffer << t.rdbuf();
+	// std::string text = buffer.str();
+
+	// // parse XML document
+	// const int PARSE_FLAGS = 0; // 0 signals default parse settings
+	// xml_document<> doc;
+	// doc.parse<0>(&text[0]);
+
+	// xml_node<>* currentNode = doc.first_node();
+
+
+	// std::map<char*,void*>* sharedData = new std::map<char*,void*>();
+
+	// int processedCount = 0;
+	// (*sharedData)["processedCount"] = &processedCount;
+
+	// Composite* root = new Sequence(sharedData); // memory leak
+
+	// // manually retrieve leaf nodes (test code)
+	// xml_node<>* leafNode = currentNode->first_node();
+	// while (leafNode != nullptr)
+	// {
+	// 	xml_attribute<>* leafNodeAttr = leafNode->first_attribute();
+	// 	char* leafNodeFn = leafNodeAttr->value();
+	// 	root->AddChild(new Leaf(sharedData, leafNodeFn));
+
+	// 	leafNode = leafNode->next_sibling();
+	// }
+
+	// // root->AddChild(new Leaf(sharedData, leafNodeFn)); // memory leak
+
+	// ProcessStatus::Enum result = root->Process();
+
+////////////////////////////////////////////////////////////
 
 	// const char* luaFunctionNameLeaf = "display";
 
@@ -93,6 +110,12 @@ int main(int argc, char* argv[])
 
 	// ProcessStatus::Enum result = root->Process();
 
+	// delete inverter;
+	// delete subSelector;
+	// delete sharedData;
+
+////////////////////////////////////////////////////////////
+
 	std::cout << "Final status: ";
 
 	switch(result) {
@@ -108,10 +131,6 @@ int main(int argc, char* argv[])
 	}
 
 	std::cout << "Processed count: " << processedCount << std::endl;
-
-	// delete inverter;
-	// delete subSelector;
-	// delete sharedData;
 
 	return 0;
 }
