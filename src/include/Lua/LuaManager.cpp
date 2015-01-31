@@ -1,5 +1,6 @@
 #include "LuaManager.h"
 #include "stdio.h"
+#include <string>
 
 extern "C"
 {
@@ -33,34 +34,37 @@ LuaManager* LuaManager::GetInstance()
     return manager;
 }
 
-void LuaManager::CallLuaFunction(std::string fn)
+ProcessStatus::Enum LuaManager::CallLuaFunction(std::string fn)
 {
 	lua_getglobal(state, fn.c_str());
 
-	if (lua_pcall(state, 0, 0, 0) != LUA_OK)
+	if (lua_pcall(state, 0, 1, 0) != LUA_OK)
 	{
-		printf("error running function 'f': %s\n",
+		printf("error running function '%s': %s\n", fn.c_str(),
                 lua_tostring(state, -1));
 	}
+
+	std::string output(lua_tostring(state, -1));
+	lua_pop(state, 1);
+
+	ProcessStatus::Enum processStatus;
+	if (!output.compare("success"))
+	{
+		processStatus = ProcessStatus::Success;
+	}
+	else if (!output.compare("failure"))
+	{
+		processStatus = ProcessStatus::Failure;
+	}
+	else if (!output.compare("running"))
+	{
+		processStatus = ProcessStatus::Running;
+	}
+	else
+	{
+		// TODO: throw error
+		printf("function must return correct string\n");
+	}
+
+	return processStatus;
 }
-
-
-
-// double f (lua_State *L, double x, double y) {
-//      int isnum;
-//      double z;
-//      /* push functions and arguments */
-//      lua_getglobal(L, "f");  /* function to be called */
-//      lua_pushnumber(L, x);   /* push 1st argument */
-//      lua_pushnumber(L, y);   /* push 2nd argument */
-//      /* do the call (2 arguments, 1 result) */
-//      if (lua_pcall(L, 2, 1, 0) != LUA_OK)
-       // error(L, "error running function 'f': %s",
-       //          lua_tostring(L, -1));
-//      /* retrieve result */
-//      z = lua_tonumberx(L, -1, &isnum);
-//      if (!isnum)
-//        error(L, "function 'f' must return a number");
-//      lua_pop(L, 1);  /* pop returned value */
-//      return z;
-// }

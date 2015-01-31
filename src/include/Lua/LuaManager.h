@@ -2,6 +2,7 @@
 #define _luamanager_h
 
 #include <string>
+#include "./../BehaviourTree/INode.h"
 
 // Forward declarations
 class lua_State;
@@ -13,7 +14,8 @@ public:
 
 	~LuaManager();
 
-	void CallLuaFunction(std::string fn);
+	ProcessStatus::Enum CallLuaFunction(std::string fn);
+
 private:
 	LuaManager();
 

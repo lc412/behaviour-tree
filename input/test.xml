@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <sequence>
-	<leaf fn="foo" />
+	<leaf fn="display" />
 	<leaf fn="foo" />
 	<selector>
 		<leaf fn="bar" />
 		<leaf fn="bar" />
-		<leaf fn="bar" />
+		<leaf fn="foo" />
+		<leaf fn="foo" />
 	</selector>
 </sequence>

@@ -30,9 +30,6 @@ int main(int argc, char* argv[])
 
 	fileParser->SetSharedData(sharedData);
 
-	int processedCount = 0;
-	(*sharedData)["processedCount"] = &processedCount;
-
 	INode* root = fileParser->ParseXMLFile("./input/test.xml");
 
 	ProcessStatus::Enum result = root->Process();
@@ -127,8 +124,6 @@ int main(int argc, char* argv[])
 			std::cout << "Success" << std::endl;
 			break;
 	}
-
-	std::cout << "Processed count: " << processedCount << std::endl;
 
 	return 0;
 }
