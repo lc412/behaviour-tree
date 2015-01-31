@@ -33,11 +33,9 @@ LuaManager* LuaManager::GetInstance()
     return manager;
 }
 
-void LuaManager::CallLuaFunction(const char* fn)
+void LuaManager::CallLuaFunction(std::string fn)
 {
-    //std::cout << fn << std::endl;
-
-	lua_getglobal(state, fn);
+	lua_getglobal(state, fn.c_str());
 
 	if (lua_pcall(state, 0, 0, 0) != LUA_OK)
 	{

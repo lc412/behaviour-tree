@@ -1,6 +1,8 @@
 #ifndef _luamanager_h
 #define _luamanager_h
 
+#include <string>
+
 // Forward declarations
 class lua_State;
 
@@ -11,7 +13,7 @@ public:
 
 	~LuaManager();
 
-	void CallLuaFunction(const char* fn);
+	void CallLuaFunction(std::string fn);
 private:
 	LuaManager();
 

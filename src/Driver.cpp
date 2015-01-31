@@ -40,11 +40,9 @@ int main(int argc, char* argv[])
 	delete static_cast<Sequence*>(root);
 	delete sharedData;
 
-	//ProcessStatus::Enum result = ProcessStatus::Failure;
-
 ////////////////////////////////////////////////////////////
 
-	// Retrieve XML text
+	// // Retrieve XML text
 	// std::ifstream t("./input/test.xml");
 	// std::stringstream buffer;
 	// buffer << t.rdbuf();
@@ -76,7 +74,7 @@ int main(int argc, char* argv[])
 	// 	leafNode = leafNode->next_sibling();
 	// }
 
-	// // root->AddChild(new Leaf(sharedData, leafNodeFn)); // memory leak
+	// //root->AddChild(new Leaf(sharedData, leafNodeFn)); // memory leak
 
 	// ProcessStatus::Enum result = root->Process();
 

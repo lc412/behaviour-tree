@@ -2,7 +2,7 @@
 //#include <iostream>
 #include "../Lua/LuaManager.h"
 
-Leaf::Leaf(std::map<char*,void*>* sharedData, const char* fn)
+Leaf::Leaf(std::map<char*,void*>* sharedData, std::string fn)
 : INode(sharedData), LuaFnName(fn)
 {
 }

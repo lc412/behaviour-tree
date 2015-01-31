@@ -163,7 +163,8 @@ INode* ConstructBTNodeFromXMLNode(xml_node<>* node, std::map<char*,void*>* share
 		xml_attribute<>* leafFnAttribute = node->first_attribute("fn");
 		if (leafFnAttribute != nullptr)
 		{
-			btNode = new Leaf(sharedData, leafFnAttribute->value());
+			std::string test = leafFnAttribute->value();
+			btNode = new Leaf(sharedData, test);
 		}
 		else
 		{

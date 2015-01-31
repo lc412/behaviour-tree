@@ -2,11 +2,12 @@
 #define _leaf_h
 
 #include "INode.h"
+#include <string>
 
 class Leaf final : public INode
 {
 public:
-	Leaf(std::map<char*,void*>* sharedData, const char* fn);
+	Leaf(std::map<char*,void*>* sharedData, std::string fn);
 
 	~Leaf();
 
@@ -15,7 +16,7 @@ public:
 	virtual ProcessStatus::Enum Process() override;
 
 private:
-	const char* LuaFnName;
+	std::string LuaFnName;
 };
 
 #endif
